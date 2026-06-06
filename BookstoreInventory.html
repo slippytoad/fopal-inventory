@@ -128,6 +128,21 @@ function BookstoreInventory() {
     })();
   }, []);
 
+  // When served over HTTP (e.g. the published GitHub Pages site), auto-load
+  // the JSON that lives next to this page. A connected local file still wins.
+  useEffect(() => {
+    if (location.protocol !== "http:" && location.protocol !== "https:") return;
+    fetch("inventory-data.json?t=" + Date.now())
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(data => {
+        if (fileHandleRef.current) return; // local data file already connected
+        skipSave.current = true;
+        setBooks(prev => prev.length ? prev : dedupe(data.books || []));
+        setSoldBooks(prev => prev.length ? prev : (data.soldBooks || []));
+      })
+      .catch(e => console.warn("Auto-load failed:", e));
+  }, []);
+
   const connectFile = async () => {
     try {
       const [handle] = await window.showOpenFilePicker({
