@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoPAL Book Inventory</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<style>body{margin:0}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo, useEffect, useRef } = React;
+
+
+const TODAY = new Date().toISOString().slice(0, 10);
+
+/* Book data lives in inventory-data.json - this app is just the viewer/editor. */
+
+const GENRES = ["All", "Fiction", "Non-Fiction", "Children's"];
+const SHELVES = ["All", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
+
+function fmt(d) {
+  if (!d) return "—";
+  const [y, m, day] = d.split("-");
+  return `${m}/${day}/${y}`;
+}
+
+// Same title + author = same book. Merge them and add up the copies.
+const keyOf = (b) => `${b.title.trim().toLowerCase()}|${b.author.trim().toLowerCase()}`;
+function dedupe(list) {
+  const map = new Map();
+  for (const b of list) {
+    const k = keyOf(b);
+    if (map.has(k)) {
+      const e = map.get(k);
+      e.qty += b.qty;
+      e.unclear = e.unclear || b.unclear;
+    } else {
+      map.set(k, { ...b });
+    }
+  }
+  return [...map.values()];
+}
+
+// ---- JSON file persistence (File System Access API, Chrome/Edge) ----
+const FS_SUPPORTED = typeof window !== "undefined" && "showOpenFilePicker" in window;
+const IDB_NAME = "fopal-inventory", IDB_STORE = "handles";
+const idbOpen = () => new Promise((res, rej) => {
+  const r = indexedDB.open(IDB_NAME, 1);
+  r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE);
+  r.onsuccess = () => res(r.result);
+  r.onerror = () => rej(r.error);
+});
+async function idbGet(key) {
+  try {
+    const db = await idbOpen();
+    return await new Promise((res, rej) => {
+      const r = db.transaction(IDB_STORE).objectStore(IDB_STORE).get(key);
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+  } catch { return undefined; }
+}
+async function idbSet(key, val) {
+  try {
+    const db = await idbOpen();
+    await new Promise((res, rej) => {
+      const tx = db.transaction(IDB_STORE, "readwrite");
+      tx.objectStore(IDB_STORE).put(val, key);
+      tx.oncomplete = () => res();
+      tx.onerror = () => rej(tx.error);
+    });
+  } catch { /* no IDB - user just re-picks the file next visit */ }
+}
+
+function BookstoreInventory() {
+  const [books, setBooks]             = useState([]);
+  const [soldBooks, setSoldBooks]     = useState([]);
+  const [tab, setTab]                 = useState("inventory");
+  const [search, setSearch]           = useState("");
+  const [genreFilter, setGenreFilter] = useState("All");
+  const [shelfFilter, setShelfFilter] = useState("All");
+  const [unclearOnly, setUnclearOnly] = useState(false);
+  const [sortBy, setSortBy]           = useState("title");
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newBook, setNewBook]         = useState({ title: "", author: "", genre: "Fiction", shelf: "Shelf 1", qty: 1 });
+  const [editingId, setEditingId]     = useState(null);
+  const [editDraft, setEditDraft]     = useState({ title: "", author: "" });
+  const [toast, setToast]             = useState(null);
+  const [fileStatus, setFileStatus]   = useState("none"); // none | reconnect | connected
+  const fileHandleRef = useRef(null);
+  const saveTimer     = useRef(null);
+  const skipSave      = useRef(true);
+
+  const showToast = (msg, color = "#1a1a1a") => {
+    setToast({ msg, color });
+    setTimeout(() => setToast(null), 2800);
+  };
+
+  // ---- Load / connect the JSON data file ----
+  const loadFromHandle = async (handle) => {
+    const file = await handle.getFile();
+    const text = await file.text();
+    const data = text.trim() ? JSON.parse(text) : {};
+    skipSave.current = true;
+    setBooks(dedupe(data.books || []));
+    setSoldBooks(data.soldBooks || []);
+    fileHandleRef.current = handle;
+    setFileStatus("connected");
+  };
+
+  useEffect(() => {
+    if (!FS_SUPPORTED) return;
+    (async () => {
+      try {
+        const handle = await idbGet("dataFile");
+        if (!handle) return;
+        if ((await handle.queryPermission({ mode: "readwrite" })) === "granted") {
+          await loadFromHandle(handle);
+        } else {
+          fileHandleRef.current = handle;
+          setFileStatus("reconnect");
+        }
+      } catch (e) { console.warn("Restore failed:", e); }
+    })();
+  }, []);
+
+  const connectFile = async () => {
+    try {
+      const [handle] = await window.showOpenFilePicker({
+        types: [{ description: "Inventory JSON", accept: { "application/json": [".json"] } }],
+      });
+      if ((await handle.requestPermission({ mode: "readwrite" })) !== "granted") return;
+      await idbSet("dataFile", handle);
+      await loadFromHandle(handle);
+      showToast("Data file connected - changes now save automatically.", "#27ae60");
+    } catch (e) {
+      if (e.name !== "AbortError") showToast("Couldn't open that file.", "#c0392b");
+    }
+  };
+
+  const reconnectFile = async () => {
+    try {
+      if ((await fileHandleRef.current.requestPermission({ mode: "readwrite" })) !== "granted") return;
+      await loadFromHandle(fileHandleRef.current);
+      showToast("Reconnected - auto-save is back on.", "#27ae60");
+    } catch {
+      showToast("Couldn't reconnect - use Connect data file instead.", "#c0392b");
+      setFileStatus("none");
+    }
+  };
+
+  // ---- Auto-save (debounced) whenever inventory or sold list changes ----
+  useEffect(() => {
+    if (fileStatus !== "connected") return;
+    if (skipSave.current) { skipSave.current = false; return; }
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(async () => {
+      try {
+        const w = await fileHandleRef.current.createWritable();
+        await w.write(JSON.stringify({ books, soldBooks, savedAt: new Date().toISOString() }, null, 2));
+        await w.close();
+      } catch {
+        setFileStatus("reconnect");
+        showToast("Save failed - click Reconnect data file.", "#c0392b");
+      }
+    }, 600);
+    return () => clearTimeout(saveTimer.current);
+  }, [books, soldBooks, fileStatus]);
+
+  // ---- Fallback for browsers without the File System Access API ----
+  const exportJson = () => {
+    const blob = new Blob([JSON.stringify({ books, soldBooks, savedAt: new Date().toISOString() }, null, 2)],
+      { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "inventory-data.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast("Downloaded inventory-data.json - keep it next to this page.", "#2980b9");
+  };
+  const importJson = (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    f.text().then(t => {
+      const data = JSON.parse(t);
+      skipSave.current = true;
+      setBooks(dedupe(data.books || []));
+      setSoldBooks(data.soldBooks || []);
+      showToast("Inventory loaded from file.", "#27ae60");
+    }).catch(() => showToast("Couldn't read that file.", "#c0392b"));
+    e.target.value = "";
+  };
+
+  // ---- Manual sell (prompts for the date sold) ----
+  const handleMarkSold = (id) => {
+    const book = books.find(b => b.id === id);
+    if (!book) return;
+    setSoldBooks(prev => [...prev, { ...book, soldDate: TODAY, soldId: Date.now() }]);
+    setBooks(prev => prev.filter(b => b.id !== id));
+    showToast(`"${book.title}" marked sold.`, "#27ae60");
+  };
+  const handleSoldDateChange = (soldId, date) => {
+    setSoldBooks(prev => prev.map(b => b.soldId === soldId ? { ...b, soldDate: date } : b));
+  };
+  const handleUndoSold = (soldId) => {
+    const entry = soldBooks.find(b => b.soldId === soldId);
+    if (!entry) return;
+    const { soldDate, soldId: _s, ...book } = entry;
+    setBooks(prev => [...prev, book]);
+    setSoldBooks(prev => prev.filter(b => b.soldId !== soldId));
+    showToast(`"${entry.title}" restored to inventory.`);
+  };
+
+  // ---- Title / author correction ----
+  const startEdit = (book) => {
+    setEditingId(book.id);
+    setEditDraft({ title: book.title, author: book.author });
+  };
+  const saveEdit = (id) => {
+    if (!editDraft.title.trim()) return;
+    setBooks(prev => prev.map(b => b.id === id
+      ? { ...b, title: editDraft.title.trim(), author: editDraft.author.trim() || "Unknown", unclear: false }
+      : b));
+    setEditingId(null);
+    showToast("Updated.", "#2980b9");
+  };
+
+  const handleQtyChange = (id, delta) =>
+    setBooks(prev => prev.map(b => b.id === id ? { ...b, qty: Math.max(0, b.qty + delta) } : b));
+  const handleToggleUnclear = (id) =>
+    setBooks(prev => prev.map(b => b.id === id ? { ...b, unclear: !b.unclear } : b));
+  const handleDelete = (id) => {
+    const book = books.find(b => b.id === id);
+    setBooks(prev => prev.filter(b => b.id !== id));
+    showToast(`"${book?.title}" removed.`);
+  };
+  const handleAddBook = () => {
+    if (!newBook.title.trim() || !newBook.author.trim()) return;
+    const k = keyOf(newBook);
+    const existing = books.find(b => keyOf(b) === k);
+    if (existing) {
+      const newQty = existing.qty + (parseInt(newBook.qty) || 1);
+      setBooks(prev => prev.map(b => b.id === existing.id ? { ...b, qty: newQty } : b));
+      showToast(`"${existing.title}" already in stock - quantity bumped to ${newQty}.`, "#2980b9");
+    } else {
+      setBooks(prev => [...prev, { ...newBook, id: Date.now(), unclear: false, dateAdded: TODAY }]);
+      showToast("Book added!", "#2980b9");
+    }
+    setNewBook({ title: "", author: "", genre: "Fiction", shelf: "Shelf 1", qty: 1 });
+    setShowAddForm(false);
+  };
+
+  const filteredInventory = useMemo(() => {
+    const q = search.toLowerCase();
+    let r = books.filter(b =>
+      (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)) &&
+      (genreFilter === "All" || b.genre === genreFilter) &&
+      (shelfFilter === "All" || b.shelf.startsWith(shelfFilter)) &&
+      (!unclearOnly || b.unclear));
+    return [...r].sort((a, b) => {
+      if (sortBy === "title")  return a.title.localeCompare(b.title);
+      if (sortBy === "author") return a.author.localeCompare(b.author);
+      if (sortBy === "genre")  return a.genre.localeCompare(b.genre);
+      if (sortBy === "date")   return b.dateAdded.localeCompare(a.dateAdded);
+      return 0;
+    });
+  }, [books, search, genreFilter, shelfFilter, unclearOnly, sortBy]);
+
+  const filteredSold = useMemo(() => {
+    const q = search.toLowerCase();
+    return [...soldBooks]
+      .filter(b => !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q))
+      .sort((a, b) => b.soldDate.localeCompare(a.soldDate));
+  }, [soldBooks, search]);
+
+  const unclearCount = books.filter(b => b.unclear).length;
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#f5f0e8", fontFamily: "'Helvetica Neue',Helvetica,Arial,sans-serif", color: "#1a1a1a" }}>
+      <div style={{ background: "#1e5631", color: "white", padding: "24px 32px 18px", boxShadow: "0 4px 16px rgba(0,0,0,0.2)" }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
+            <h1 style={{ margin: 0, fontSize: 30, fontWeight: "bold", letterSpacing: "-0.5px" }}>Friends of Palo Alto Library</h1>
+            <span style={{ fontSize: 15, opacity: 0.82, fontStyle: "italic" }}>Book Inventory</span>
+          </div>
+          <div style={{ display: "flex", gap: 22, marginTop: 14, flexWrap: "wrap", fontSize: 14, opacity: 0.92 }}>
+            <span>📚 <strong>{books.length}</strong> in stock</span>
+            <span>🛍️ <strong>{soldBooks.length}</strong> sold</span>
+            {unclearCount > 0 && <span>🚩 <strong>{unclearCount}</strong> need checking</span>}
+            <span style={{ marginLeft: "auto", display: "flex", gap: 8, alignItems: "center" }}>
+              {FS_SUPPORTED ? (
+                fileStatus === "connected"
+                  ? <span style={{ fontSize: 13, background: "rgba(255,255,255,0.15)", padding: "4px 12px", borderRadius: 14 }}>💾 Auto-saving to data file</span>
+                  : fileStatus === "reconnect"
+                    ? <button onClick={reconnectFile} style={fileBtn}>🔌 Reconnect data file</button>
+                    : <button onClick={connectFile} style={fileBtn}>📁 Connect data file</button>
+              ) : (
+                <>
+                  <button onClick={exportJson} style={fileBtn}>⬇ Export JSON</button>
+                  <label style={{ ...fileBtn, display: "inline-block" }}>
+                    ⬆ Import JSON
+                    <input type="file" accept=".json,application/json" onChange={importJson} style={{ display: "none" }} />
+                  </label>
+                </>
+              )}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "24px 20px" }}>
+        {/* Tabs */}
+        <div style={{ display: "flex", marginBottom: 24, borderRadius: 10, overflow: "hidden", border: "1.5px solid #c8b89a", width: "fit-content" }}>
+          {[["inventory", "📚 Inventory"], ["sold", "🛍️ Sold"]].map(([key, label]) => (
+            <button key={key} onClick={() => setTab(key)} style={{
+              padding: "10px 26px", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: 14,
+              fontWeight: tab === key ? "bold" : "normal",
+              background: tab === key ? "#1e5631" : "white", color: tab === key ? "white" : "#555",
+            }}>{label}{key === "sold" && soldBooks.length ? ` (${soldBooks.length})` : ""}</button>
+          ))}
+        </div>
+
+        {/* Controls */}
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 20, alignItems: "center" }}>
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search title or author..."
+            style={{ flex: "1 1 200px", padding: "9px 13px", borderRadius: 8, border: "1.5px solid #c8b89a", fontSize: 14, background: "white", fontFamily: "inherit", outline: "none" }} />
+          {tab === "inventory" && <>
+            <select value={genreFilter} onChange={e => setGenreFilter(e.target.value)} style={sel}>{GENRES.map(g => <option key={g}>{g}</option>)}</select>
+            <select value={shelfFilter} onChange={e => setShelfFilter(e.target.value)} style={sel}>{SHELVES.map(s => <option key={s}>{s}</option>)}</select>
+            <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={sel}>
+              <option value="title">Sort: Title</option>
+              <option value="author">Sort: Author</option>
+              <option value="genre">Sort: Genre</option>
+              <option value="date">Sort: Date Added</option>
+            </select>
+            <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, cursor: "pointer", whiteSpace: "nowrap" }}>
+              <input type="checkbox" checked={unclearOnly} onChange={e => setUnclearOnly(e.target.checked)} /> 🚩 Flagged only
+            </label>
+            <button onClick={() => setShowAddForm(v => !v)} style={btnRed}>+ Add Book</button>
+          </>}
+        </div>
+
+        {/* Add form */}
+        {tab === "inventory" && showAddForm && (
+          <div style={{ background: "white", border: "1.5px solid #c8b89a", borderRadius: 10, padding: 18, marginBottom: 22, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
+            {[["Title *", "title"], ["Author *", "author"]].map(([lbl, key]) => (
+              <div key={key} style={{ display: "flex", flexDirection: "column", gap: 4, flex: "2 1 160px" }}>
+                <label style={{ fontSize: 12, color: "#666" }}>{lbl}</label>
+                <input value={newBook[key]} onChange={e => setNewBook(p => ({ ...p, [key]: e.target.value }))} placeholder={lbl.replace(" *", "")} style={inp} />
+              </div>
+            ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: "1 1 110px" }}>
+              <label style={{ fontSize: 12, color: "#666" }}>Genre</label>
+              <select value={newBook.genre} onChange={e => setNewBook(p => ({ ...p, genre: e.target.value }))} style={inp}>{GENRES.filter(g => g !== "All").map(g => <option key={g}>{g}</option>)}</select>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: "1 1 110px" }}>
+              <label style={{ fontSize: 12, color: "#666" }}>Shelf</label>
+              <select value={newBook.shelf} onChange={e => setNewBook(p => ({ ...p, shelf: e.target.value }))} style={inp}>{SHELVES.filter(s => s !== "All").map(s => <option key={s}>{s}</option>)}</select>
+            </div>
+            <button onClick={handleAddBook} style={btnGreen}>Add</button>
+            <button onClick={() => setShowAddForm(false)} style={btnGrey}>Cancel</button>
+          </div>
+        )}
+
+        <div style={{ fontSize: 13, color: "#888", marginBottom: 12 }}>
+          {tab === "inventory" ? `${filteredInventory.length} of ${books.length} titles` : `${filteredSold.length} sold title${filteredSold.length !== 1 ? "s" : ""}`}
+        </div>
+
+        {/* INVENTORY */}
+        {tab === "inventory" && (
+          <div style={card}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <thead><tr style={{ background: "#3d1f1a", color: "white" }}>
+                {["", "Title", "Author", "Genre", "Shelf", "Added", "Qty", "Actions"].map(h =>
+                  <th key={h} style={th}>{h}</th>)}
+              </tr></thead>
+              <tbody>
+                {filteredInventory.length === 0
+                  ? <tr><td colSpan={8} style={empty}>{books.length === 0 && fileStatus !== "connected"
+                      ? (FS_SUPPORTED
+                          ? <>No inventory loaded. Click <strong>📁 Connect data file</strong> above and pick <strong>inventory-data.json</strong>.</>
+                          : <>No inventory loaded. Click <strong>⬆ Import JSON</strong> above and pick <strong>inventory-data.json</strong>.</>)
+                      : "No books found."}</td></tr>
+                  : filteredInventory.map((book, i) => {
+                    const editing = editingId === book.id;
+                    return (
+                    <tr key={book.id} style={{ background: book.unclear ? "#fff8e6" : i % 2 === 0 ? "#fdfaf5" : "white", borderTop: "1px solid #ede8df" }}>
+                      <td style={{ padding: "8px 6px 8px 12px", width: 28 }}>
+                        <button onClick={() => handleToggleUnclear(book.id)} title={book.unclear ? "Clear flag" : "Flag as unclear"}
+                          style={{ background: "none", border: "none", cursor: "pointer", fontSize: 16, opacity: book.unclear ? 1 : 0.2, padding: 0 }}>🚩</button>
+                      </td>
+                      {editing ? (
+                        <>
+                          <td style={{ padding: "6px 12px" }}>
+                            <input value={editDraft.title} autoFocus onChange={e => setEditDraft(d => ({ ...d, title: e.target.value }))}
+                              onKeyDown={e => e.key === "Enter" && saveEdit(book.id)} style={editInp} />
+                          </td>
+                          <td style={{ padding: "6px 12px" }}>
+                            <input value={editDraft.author} onChange={e => setEditDraft(d => ({ ...d, author: e.target.value }))}
+                              onKeyDown={e => e.key === "Enter" && saveEdit(book.id)} style={editInp} />
+                          </td>
+                          <td colSpan={3} style={{ padding: "6px 12px", color: "#999", fontSize: 12, fontStyle: "italic" }}>editing…</td>
+                          <td colSpan={2} style={{ padding: "6px 12px" }}>
+                            <div style={{ display: "flex", gap: 6 }}>
+                              <button onClick={() => saveEdit(book.id)} style={{ ...btnGreen, padding: "4px 12px" }}>Save</button>
+                              <button onClick={() => setEditingId(null)} style={{ ...btnGrey, padding: "4px 12px" }}>Cancel</button>
+                            </div>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td style={{ padding: "9px 12px", fontWeight: 500, maxWidth: 260 }}>{book.title}</td>
+                          <td style={{ padding: "9px 12px", color: "#555" }}>{book.author}</td>
+                          <td style={{ padding: "9px 12px" }}>
+                            <span style={genreTag(book.genre)}>{book.genre}</span>
+                          </td>
+                          <td style={{ padding: "9px 12px", color: "#666", fontSize: 12 }}>{book.shelf}</td>
+                          <td style={{ padding: "9px 12px", color: "#888", fontSize: 12, whiteSpace: "nowrap" }}>{fmt(book.dateAdded)}</td>
+                          <td style={{ padding: "9px 12px" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                              <button onClick={() => handleQtyChange(book.id, -1)} style={qtyBtn("#c0392b")}>−</button>
+                              <span style={{ minWidth: 18, textAlign: "center", fontWeight: 700 }}>{book.qty}</span>
+                              <button onClick={() => handleQtyChange(book.id, 1)} style={qtyBtn("#27ae60")}>+</button>
+                            </div>
+                          </td>
+                          <td style={{ padding: "9px 12px" }}>
+                            <div style={{ display: "flex", gap: 5 }}>
+                              <button onClick={() => startEdit(book)} title="Correct title / author"
+                                style={{ background: "none", border: "1px solid #ddd", color: "#555", padding: "4px 9px", borderRadius: 6, cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>✎ Edit</button>
+                              <button onClick={() => handleMarkSold(book.id)}
+                                style={{ background: "#f39c12", color: "white", border: "none", padding: "4px 10px", borderRadius: 6, cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>Sold</button>
+                              <button onClick={() => handleDelete(book.id)}
+                                style={{ background: "none", border: "1px solid #ddd", color: "#c0392b", padding: "4px 9px", borderRadius: 6, cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>✕</button>
+                            </div>
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  );})}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* SOLD */}
+        {tab === "sold" && (
+          <div style={card}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <thead><tr style={{ background: "#2c3e50", color: "white" }}>
+                {["Title", "Author", "Genre", "Shelf", "Date Sold", ""].map(h => <th key={h} style={th}>{h}</th>)}
+              </tr></thead>
+              <tbody>
+                {filteredSold.length === 0
+                  ? <tr><td colSpan={6} style={empty}>No books sold yet. Use the "Sold" button on any title, or upload new shelf photos and I'll move the missing ones here.</td></tr>
+                  : filteredSold.map((book, i) => (
+                    <tr key={book.soldId} style={{ background: i % 2 === 0 ? "#f8faf8" : "white", borderTop: "1px solid #ede8df" }}>
+                      <td style={{ padding: "9px 14px", fontWeight: 500 }}>{book.title}</td>
+                      <td style={{ padding: "9px 14px", color: "#555" }}>{book.author}</td>
+                      <td style={{ padding: "9px 14px" }}><span style={genreTag(book.genre)}>{book.genre}</span></td>
+                      <td style={{ padding: "9px 14px", color: "#666", fontSize: 12 }}>{book.shelf}</td>
+                      <td style={{ padding: "9px 14px" }}>
+                        <input type="date" value={book.soldDate} onChange={e => handleSoldDateChange(book.soldId, e.target.value)}
+                          style={{ padding: "4px 8px", borderRadius: 6, border: "1.5px solid #c8b89a", fontFamily: "inherit", fontSize: 12 }} />
+                      </td>
+                      <td style={{ padding: "9px 14px" }}>
+                        <button onClick={() => handleUndoSold(book.soldId)}
+                          style={{ background: "none", border: "1px solid #c8b89a", color: "#555", padding: "4px 10px", borderRadius: 6, cursor: "pointer", fontSize: 12, fontFamily: "inherit" }}>↩ Undo</button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {tab === "inventory" && (
+          <div style={{ marginTop: 28, background: "#eaf3fb", border: "1.5px solid #aed6f1", borderRadius: 10, padding: "14px 18px", fontSize: 13, color: "#2471a3" }}>
+            <strong>📷 Updating later:</strong> upload your 3 shelf photos and I'll compare them to what's in stock - anything that's vanished gets moved to Sold. Click <strong>✎ Edit</strong> to fix any title or author (handy for the flagged ones), or <strong>Sold</strong> to log a sale by hand.
+            {FS_SUPPORTED && fileStatus !== "connected" && <> <strong>💾 To keep your changes:</strong> click <strong>Connect data file</strong> up top and pick <strong>inventory-data.json</strong> (it lives next to this page) - after that every change saves itself.</>}
+          </div>
+        )}
+      </div>
+
+      {toast && (
+        <div style={{ position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)", background: toast.color, color: "white", padding: "10px 22px", borderRadius: 8, fontSize: 14, boxShadow: "0 4px 16px rgba(0,0,0,0.25)", zIndex: 9999 }}>{toast.msg}</div>
+      )}
+    </div>
+  );
+}
+
+const sel = { padding: "9px 11px", borderRadius: 8, border: "1.5px solid #c8b89a", fontSize: 13, background: "white", fontFamily: "inherit", cursor: "pointer" };
+const inp = { padding: "8px 11px", borderRadius: 8, border: "1.5px solid #c8b89a", fontSize: 13, background: "white", fontFamily: "inherit", width: "100%", boxSizing: "border-box" };
+const editInp = { ...inp, padding: "6px 9px" };
+const th = { padding: "11px 12px", textAlign: "left", fontWeight: 600, fontSize: 12, letterSpacing: "0.4px" };
+const empty = { padding: 40, textAlign: "center", color: "#999", fontStyle: "italic" };
+const card = { background: "white", borderRadius: 12, border: "1.5px solid #d9cdb8", overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" };
+const genreTag = (g) => ({
+  background: g === "Fiction" ? "#e8f4e8" : g === "Non-Fiction" ? "#e8eef8" : "#fef3e2",
+  color:      g === "Fiction" ? "#2d6a2d" : g === "Non-Fiction" ? "#2d4a8a" : "#8a5c2d",
+  padding: "2px 7px", borderRadius: 4, fontSize: 11, fontWeight: 700,
+});
+const btnRed   = { background: "#1e5631", color: "white", border: "none", padding: "9px 16px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontWeight: "bold", fontFamily: "inherit", whiteSpace: "nowrap" };
+const btnGreen = { background: "#27ae60", color: "white", border: "none", padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontFamily: "inherit", fontWeight: "bold" };
+const btnGrey  = { background: "#999",    color: "white", border: "none", padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontFamily: "inherit" };
+const fileBtn = { background: "rgba(255,255,255,0.92)", color: "#1e5631", border: "none", padding: "5px 14px", borderRadius: 14, cursor: "pointer", fontSize: 13, fontWeight: "bold", fontFamily: "inherit", whiteSpace: "nowrap" };
+const qtyBtn = (color) => ({ background: color, color: "white", border: "none", width: 22, height: 22, borderRadius: 4, cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" });
+ReactDOM.createRoot(document.getElementById("root")).render(<BookstoreInventory />);
+</script>
+</body>
+</html>
