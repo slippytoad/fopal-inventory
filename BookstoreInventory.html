@@ -168,6 +168,19 @@ function BookstoreInventory() {
     }
   };
 
+  // Auto-reconnect the remembered data file on the first click/keypress after
+  // a reload (the permission prompt needs a user gesture, so we borrow one).
+  useEffect(() => {
+    if (fileStatus !== "reconnect") return;
+    const tryReconnect = () => reconnectFile();
+    window.addEventListener("pointerdown", tryReconnect, { once: true });
+    window.addEventListener("keydown", tryReconnect, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", tryReconnect);
+      window.removeEventListener("keydown", tryReconnect);
+    };
+  }, [fileStatus]);
+
   // ---- Auto-save (debounced) whenever inventory or sold list changes ----
   useEffect(() => {
     if (fileStatus !== "connected") return;
