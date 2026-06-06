@@ -1,0 +1,1626 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "This Shattered World",
+      "author": "Amie Kaufman & Meagan Spooner",
+      "genre": "Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 2,
+      "title": "Mostly Harmless",
+      "author": "Douglas Adams",
+      "genre": "Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 3,
+      "title": "The Verdict",
+      "author": "Nick Stone",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 4,
+      "title": "Blue Angel",
+      "author": "Francine Prose",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 5,
+      "title": "Lady Almina and the Real Downton Abbey",
+      "author": "Countess of Carnarvon",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 6,
+      "title": "Truly Madly Guilty",
+      "author": "Liane Moriarty",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 7,
+      "title": "Heroes of the Frontier",
+      "author": "Dave Eggers",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 8,
+      "title": "The Spellmans Strike Again",
+      "author": "Lisa Lutz",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 9,
+      "title": "The Hound of the Baskervilles",
+      "author": "Arthur Conan Doyle",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 10,
+      "title": "Murder in Bel-Air",
+      "author": "Cara Black",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 11,
+      "title": "Whiskers and Lies",
+      "author": "Sofie Kelly",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 12,
+      "title": "Our Story Begins",
+      "author": "Tobias Wolff",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 13,
+      "title": "The Orphan Master's Son",
+      "author": "Adam Johnson",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 14,
+      "title": "The Somnambulist",
+      "author": "Jonathan Barnes",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 15,
+      "title": "Jane Eyre",
+      "author": "Charlotte Bronte",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 16,
+      "title": "A Tidewater Morning",
+      "author": "William Styron",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 17,
+      "title": "Selected Stories",
+      "author": "Alice Munro",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 18,
+      "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+      "author": "Robert Louis Stevenson",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 19,
+      "title": "Blue Shoes and Happiness",
+      "author": "Alexander McCall Smith",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 20,
+      "title": "About Face",
+      "author": "Donna Leon",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 21,
+      "title": "These Precious Days",
+      "author": "Ann Patchett",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 22,
+      "title": "Delicious!",
+      "author": "Ruth Reichl",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 23,
+      "title": "American Dirt",
+      "author": "Jeanine Cummins",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 24,
+      "title": "Shopaholic Ties the Knot",
+      "author": "Sophie Kinsella",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 25,
+      "title": "Snow Falling on Cedars",
+      "author": "David Guterson",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 26,
+      "title": "The Whistler",
+      "author": "John Grisham",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 27,
+      "title": "Hello Beautiful",
+      "author": "Ann Napolitano",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 28,
+      "title": "Ship Fever",
+      "author": "Andrea Barrett",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 29,
+      "title": "Murder on the Quai",
+      "author": "Cara Black",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 30,
+      "title": "Watch Me Disappear",
+      "author": "Janelle Brown",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 31,
+      "title": "Possession",
+      "author": "A.S. Byatt",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 32,
+      "title": "America America",
+      "author": "Ethan Canin",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 33,
+      "title": "Knife Music",
+      "author": "David Carnoy",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 34,
+      "title": "Prey",
+      "author": "Michael Crichton",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 35,
+      "title": "Girls with Bright Futures",
+      "author": "Tracy Dobmeier & Wendy Katzman",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 36,
+      "title": "Little Brother",
+      "author": "Cory Doctorow",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 37,
+      "title": "Room",
+      "author": "Emma Donoghue",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 38,
+      "title": "The Bloody Tower",
+      "author": "Cara Black",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 39,
+      "title": "The Green Road",
+      "author": "Anne Enright",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 40,
+      "title": "Three Junes",
+      "author": "Julia Glass",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 41,
+      "title": "The Knowledge",
+      "author": "Martha Grimes",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 42,
+      "title": "Fadeaway Girl",
+      "author": "Martha Grimes",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 43,
+      "title": "Skeleton Man",
+      "author": "Tony Hillerman",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 44,
+      "title": "The Sinister Pig",
+      "author": "Tony Hillerman",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 45,
+      "title": "Sand",
+      "author": "Hugh Howey",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 46,
+      "title": "It Starts With Us",
+      "author": "Colleen Hoover",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 47,
+      "title": "The Kite Runner",
+      "author": "Khaled Hosseini",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 48,
+      "title": "Wobegon Boy",
+      "author": "Garrison Keillor",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 49,
+      "title": "Old Ladies",
+      "author": "Nancy Huddleston Packer",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 50,
+      "title": "High Tide in Tucson",
+      "author": "Barbara Kingsolver",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 51,
+      "title": "Euphoria",
+      "author": "Lily King",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 52,
+      "title": "The History of Love",
+      "author": "Nicole Krauss",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 53,
+      "title": "The Good Girl",
+      "author": "Mary Kubica",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 54,
+      "title": "Birds of Paradise Lost",
+      "author": "Andrew Lam",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 55,
+      "title": "A Girl in Winter",
+      "author": "Philip Larkin",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 56,
+      "title": "The Girl with the Dragon Tattoo",
+      "author": "Stieg Larsson",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 57,
+      "title": "Rumors of Peace",
+      "author": "Ella Leffland",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 58,
+      "title": "The Blind Side",
+      "author": "Michael Lewis",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 59,
+      "title": "Another Day",
+      "author": "David Levithan",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 60,
+      "title": "A River Runs Through It",
+      "author": "Norman Maclean",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 61,
+      "title": "No One Can Know",
+      "author": "Kate Alice Marshall",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 62,
+      "title": "Gone Fishin'",
+      "author": "Walter Mosley",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 63,
+      "title": "Running in the Family",
+      "author": "Michael Ondaatje",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 64,
+      "title": "An Instance of the Fingerpost",
+      "author": "Iain Pears",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 65,
+      "title": "The Shipping News",
+      "author": "E. Annie Proulx",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 66,
+      "title": "The Man on the Balcony",
+      "author": "Sjowall & Wahloo",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 67,
+      "title": "The Rafael Affair",
+      "author": "Iain Pears",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 68,
+      "title": "The Woman in Cabin 10",
+      "author": "Ruth Ware",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 69,
+      "title": "A Gentleman in Moscow",
+      "author": "Amor Towles",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 70,
+      "title": "The Five-Minute Mysteries",
+      "author": "Ken Weber",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 71,
+      "title": "The Aftermath of Kenzaburo Tsuruda",
+      "author": "Elisabeth Wilkins Lombardo",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 72,
+      "title": "The Book of Lost Friends",
+      "author": "Lisa Wingate",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 73,
+      "title": "The Hive and the Honey",
+      "author": "Paul Yoon",
+      "genre": "Fiction",
+      "shelf": "Shelf 2",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 74,
+      "title": "Pelagia and the White Bulldog",
+      "author": "Boris Akunin",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 75,
+      "title": "Autumn Bridge",
+      "author": "Takashi Matsuoka",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 76,
+      "title": "Naked Once More",
+      "author": "Elizabeth Peters",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 77,
+      "title": "Sight Unseen",
+      "author": "Robert Goddard",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 78,
+      "title": "A Quiet Life in the Country",
+      "author": "T.E. Kinsey",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 79,
+      "title": "Runaway",
+      "author": "Alice Munro",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 80,
+      "title": "Dear Life",
+      "author": "Alice Munro",
+      "genre": "Fiction",
+      "shelf": "Shelf 3",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 81,
+      "title": "An Anthropologist on Mars",
+      "author": "Oliver Sacks",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 82,
+      "title": "Math for Smarty Pants",
+      "author": "Marilyn Burns",
+      "genre": "Children's",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 83,
+      "title": "The New Rules of Lifting",
+      "author": "Lou Schuler",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 84,
+      "title": "Becoming",
+      "author": "Michelle Obama",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 2,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 85,
+      "title": "My Life in France",
+      "author": "Julia Child",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 86,
+      "title": "Manhood for Amateurs",
+      "author": "Michael Chabon",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 87,
+      "title": "Just Kids",
+      "author": "Patti Smith",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 88,
+      "title": "Borg vs. McEnroe",
+      "author": "Malcolm Folley",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 89,
+      "title": "1776",
+      "author": "David McCullough",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 90,
+      "title": "Reading the Bible Again for the First Time",
+      "author": "Marcus Borg",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 91,
+      "title": "Expecting Better",
+      "author": "Emily Oster",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 92,
+      "title": "The Rainbow Comes and Goes",
+      "author": "Anderson Cooper & Gloria Vanderbilt",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 93,
+      "title": "The End of Alzheimer's",
+      "author": "Dale E. Bredesen MD",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 94,
+      "title": "Why Not Me?",
+      "author": "Mindy Kaling",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 95,
+      "title": "The Coddling of the American Mind",
+      "author": "Lukianoff & Haidt",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 96,
+      "title": "What I Talk About When I Talk About Running",
+      "author": "Haruki Murakami",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 97,
+      "title": "Dirt",
+      "author": "Bill Buford",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 98,
+      "title": "The Opposite of Fate",
+      "author": "Amy Tan",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 99,
+      "title": "The Art of Happiness at Work",
+      "author": "Dalai Lama & Howard C. Cutler",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 100,
+      "title": "A Brief History of Equality",
+      "author": "Thomas Piketty",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 101,
+      "title": "Zombification",
+      "author": "Andrei Codrescu",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 102,
+      "title": "Fairy Tale Interrupted",
+      "author": "RoseMarie Terenzio",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 103,
+      "title": "Little Failure",
+      "author": "Gary Shteyngart",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 104,
+      "title": "West with the Night",
+      "author": "Beryl Markham",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 105,
+      "title": "Sway",
+      "author": "Ori Brafman & Rom Brafman",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 106,
+      "title": "The Relationship Cure",
+      "author": "John Gottman",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 107,
+      "title": "The Life and Times of the Thunderbolt Kid",
+      "author": "Bill Bryson",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 108,
+      "title": "Both Sides Now",
+      "author": "Nancy Sharp",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 109,
+      "title": "Heavy",
+      "author": "Kiese Laymon",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 2,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 110,
+      "title": "Full House",
+      "author": "Stephen Jay Gould",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 111,
+      "title": "Nobody Nowhere",
+      "author": "Donna Williams",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 112,
+      "title": "The Mountain",
+      "author": "Ed Viesturs",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 113,
+      "title": "Warrior Goddess Training",
+      "author": "HeatherAsh Amara",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 114,
+      "title": "You Are a Badass at Making Money",
+      "author": "Jen Sincero",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 115,
+      "title": "The Liars' Club",
+      "author": "Mary Karr",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 116,
+      "title": "The Know-It-All",
+      "author": "A.J. Jacobs",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 117,
+      "title": "Lab Girl",
+      "author": "Hope Jahren",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 118,
+      "title": "A Child Called It",
+      "author": "Dave Pelzer",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 119,
+      "title": "Horse People",
+      "author": "Michael Korda",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 120,
+      "title": "Kinder Than Solitude",
+      "author": "Yiyun Li",
+      "genre": "Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 121,
+      "title": "Real American",
+      "author": "Julie Lythcott-Haims",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 122,
+      "title": "Spare",
+      "author": "Prince Harry",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 123,
+      "title": "Manhattan, When I Was Young",
+      "author": "Mary Cantwell",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 124,
+      "title": "The Tender Bar",
+      "author": "J.R. Moehringer",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 126,
+      "title": "Thinking in Pictures",
+      "author": "Temple Grandin",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 127,
+      "title": "Writing a Woman's Life",
+      "author": "Carolyn G. Heilbrun",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 128,
+      "title": "The Writing of the Gods",
+      "author": "Edward Dolnick",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 129,
+      "title": "Under the Sky We Make",
+      "author": "Kimberly Nicholas",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 130,
+      "title": "The Divine Conspiracy",
+      "author": "Dallas Willard",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 131,
+      "title": "A Tale of Love and Darkness",
+      "author": "Amos Oz",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 132,
+      "title": "Spunk & Bite",
+      "author": "Arthur Plotnik",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 133,
+      "title": "The Great Unraveling",
+      "author": "Paul Krugman",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 134,
+      "title": "Tender at the Bone",
+      "author": "Ruth Reichl",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 135,
+      "title": "Spark",
+      "author": "John J. Ratey",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 136,
+      "title": "A Walk in the Woods",
+      "author": "Bill Bryson",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 137,
+      "title": "Waking Up White",
+      "author": "Debby Irving",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 138,
+      "title": "Heart of the Land",
+      "author": "Various",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 139,
+      "title": "An Unquiet Mind",
+      "author": "Kay Redfield Jamison",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 140,
+      "title": "Showstopper",
+      "author": "Peter Lovesey",
+      "genre": "Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 141,
+      "title": "30 Days to a Well-Mannered Dog",
+      "author": "Tamar Geller",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 142,
+      "title": "It Takes Blood and Guts",
+      "author": "Lucy O'Brien and Skin",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 143,
+      "title": "My Grandfather's Blessings",
+      "author": "Rachel Naomi Remen",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 144,
+      "title": "Hounds of the Basket Stitch",
+      "author": "Anne Canadeo",
+      "genre": "Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 145,
+      "title": "All I Really Need to Know I Learned in Kindergarten",
+      "author": "Robert Fulghum",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 146,
+      "title": "Lots of Candles, Plenty of Cake",
+      "author": "Anna Quindlen",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 147,
+      "title": "Talking as Fast as I Can",
+      "author": "Lauren Graham",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 148,
+      "title": "A Lesson Before Dying",
+      "author": "Ernest J. Gaines",
+      "genre": "Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 149,
+      "title": "The Hidden Secrets & Stories of Disneyland",
+      "author": "Bernhard",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": true,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 150,
+      "title": "How to Wake Up",
+      "author": "Toni Bernhard",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 151,
+      "title": "The Salt Path",
+      "author": "Raynor Winn",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 152,
+      "title": "All We Can Save",
+      "author": "Ed. Johnson & Wilkinson",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 153,
+      "title": "Getting Things Done",
+      "author": "David Allen",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 154,
+      "title": "Love Atop a Keyboard",
+      "author": "Janet Silver Ghent",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 155,
+      "title": "The Breast Cancer Survival Manual",
+      "author": "John Link MD",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 156,
+      "title": "Falling Leaves",
+      "author": "Adeline Yen Mah",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 157,
+      "title": "The Art of Learning",
+      "author": "Josh Waitzkin",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 158,
+      "title": "An Unfinished Love Story",
+      "author": "Doris Kearns Goodwin",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 5",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 160,
+      "title": "This Changes Everything",
+      "author": "Naomi Klein",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 6",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 161,
+      "title": "Educated",
+      "author": "Tara Westover",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 6",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 162,
+      "title": "Furiously Happy",
+      "author": "Jenny Lawson",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 6",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 163,
+      "title": "The Art of Happiness",
+      "author": "Dalai Lama & Howard C. Cutler",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 164,
+      "title": "de Young: Selected Works",
+      "author": "Fine Arts Museums of San Francisco",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06"
+    }
+  ],
+  "soldBooks": [],
+  "savedAt": "2026-06-06T23:15:01.048Z"
+}

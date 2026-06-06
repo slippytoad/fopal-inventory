@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoPAL Book Inventory</title>
+<style>
+  body { margin: 0; background: #f5f0e8; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1a1a1a; }
+  .header { background: #1e5631; color: white; padding: 24px 32px 18px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+  .header-inner { max-width: 1180px; margin: 0 auto; }
+  h1 { margin: 0; font-size: 30px; font-weight: bold; letter-spacing: -0.5px; display: inline; }
+  .subtitle { font-size: 15px; opacity: 0.82; font-style: italic; margin-left: 14px; }
+  .stats { display: flex; gap: 22px; margin-top: 14px; flex-wrap: wrap; font-size: 14px; opacity: 0.92; }
+  .main { max-width: 1180px; margin: 0 auto; padding: 24px 20px; }
+  .tabs { display: flex; margin-bottom: 24px; border-radius: 10px; overflow: hidden; border: 1.5px solid #c8b89a; width: fit-content; }
+  .tabs button { padding: 10px 26px; border: none; cursor: pointer; font-family: inherit; font-size: 14px; background: white; color: #555; }
+  .tabs button.active { background: #1e5631; color: white; font-weight: bold; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+  .controls input[type=text] { flex: 1 1 200px; padding: 9px 13px; border-radius: 8px; border: 1.5px solid #c8b89a; font-size: 14px; background: white; font-family: inherit; outline: none; }
+  .controls select { padding: 9px 11px; border-radius: 8px; border: 1.5px solid #c8b89a; font-size: 13px; background: white; font-family: inherit; cursor: pointer; }
+  .count { font-size: 13px; color: #888; margin-bottom: 12px; }
+  .card { background: white; border-radius: 12px; border: 1.5px solid #d9cdb8; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead tr { background: #3d1f1a; color: white; }
+  th { padding: 11px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.4px; }
+  td { padding: 9px 12px; }
+  tbody tr { border-top: 1px solid #ede8df; }
+  tbody tr:nth-child(even) { background: #fdfaf5; }
+  .tag { padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .tag.fic { background: #e8f4e8; color: #2d6a2d; }
+  .tag.non { background: #e8eef8; color: #2d4a8a; }
+  .tag.chi { background: #fef3e2; color: #8a5c2d; }
+  .muted { color: #666; font-size: 12px; }
+  .empty { padding: 40px; text-align: center; color: #999; font-style: italic; }
+  .qty { font-weight: 700; text-align: center; }
+  .footer { margin-top: 28px; font-size: 12px; color: #999; text-align: center; }
+  label.chk { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <h1>Friends of Palo Alto Library</h1><span class="subtitle">Book Inventory</span>
+  <div class="stats">
+    <span>&#128218; <strong id="stat-stock"></strong> in stock</span>
+    <span>&#128717;&#65039; <strong id="stat-sold"></strong> sold</span>
+    <span style="margin-left:auto; font-size:13px; background:rgba(255,255,255,0.15); padding:4px 12px; border-radius:14px;">&#128064; View only &middot; updated <span id="stat-date"></span></span>
+  </div>
+</div></div>
+<div class="main">
+  <div class="tabs">
+    <button id="tab-inv" class="active" onclick="setTab('inv')">&#128218; Inventory</button>
+    <button id="tab-sold" onclick="setTab('sold')">&#128717;&#65039; Sold</button>
+  </div>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search title or author..." oninput="render()">
+    <select id="genre" onchange="render()"></select>
+    <select id="shelf" onchange="render()"></select>
+    <select id="sort" onchange="render()">
+      <option value="title">Sort: Title</option>
+      <option value="author">Sort: Author</option>
+      <option value="genre">Sort: Genre</option>
+      <option value="date">Sort: Date Added</option>
+    </select>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="card"><table>
+    <thead><tr id="head"></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <div class="footer">Friends of Palo Alto Library &middot; read-only inventory snapshot</div>
+</div>
+<script>
+let DATA = { books: [], soldBooks: [], savedAt: "" };
+const GENRES = ["All", "Fiction", "Non-Fiction", "Children's"];
+const SHELVES = ["All", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
+let tab = "inv";
+
+function fmt(d) { if (!d) return "—"; const [y,m,day] = d.split("-"); return m+"/"+day+"/"+y; }
+function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+function tagCls(g) { return g === "Fiction" ? "fic" : g === "Non-Fiction" ? "non" : "chi"; }
+
+function fill(id, opts) {
+  const el = document.getElementById(id);
+  el.innerHTML = opts.map(o => "<option>"+o+"</option>").join("");
+}
+fill("genre", GENRES);
+fill("shelf", SHELVES);
+
+function updateStats() {
+  document.getElementById("stat-stock").textContent = DATA.books.length;
+  document.getElementById("stat-sold").textContent = DATA.soldBooks.length;
+  document.getElementById("stat-date").textContent = fmt((DATA.savedAt || "").slice(0,10));
+}
+
+function setTab(t) {
+  tab = t;
+  document.getElementById("tab-inv").className = t === "inv" ? "active" : "";
+  document.getElementById("tab-sold").className = t === "sold" ? "active" : "";
+  document.getElementById("genre").style.display = t === "inv" ? "" : "none";
+  document.getElementById("shelf").style.display = t === "inv" ? "" : "none";
+  document.getElementById("sort").style.display = t === "inv" ? "" : "none";
+  render();
+}
+
+function render() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const head = document.getElementById("head");
+  const rows = document.getElementById("rows");
+  const count = document.getElementById("count");
+
+  if (tab === "inv") {
+    const g = document.getElementById("genre").value;
+    const s = document.getElementById("shelf").value;
+    const sort = document.getElementById("sort").value;
+    let list = DATA.books.filter(b =>
+      (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)) &&
+      (g === "All" || b.genre === g) &&
+      (s === "All" || b.shelf.indexOf(s) === 0));
+    list.sort((a,b) => {
+      if (sort === "title") return a.title.localeCompare(b.title);
+      if (sort === "author") return a.author.localeCompare(b.author);
+      if (sort === "genre") return a.genre.localeCompare(b.genre);
+      if (sort === "date") return (b.dateAdded||"").localeCompare(a.dateAdded||"");
+      return 0;
+    });
+    head.innerHTML = ["Title","Author","Genre","Shelf","Added","Qty"].map(h => "<th>"+h+"</th>").join("");
+    count.textContent = list.length + " of " + DATA.books.length + " titles";
+    rows.innerHTML = list.length === 0
+      ? '<tr><td colspan="6" class="empty">No books found.</td></tr>'
+      : list.map(b =>
+        "<tr><td style='font-weight:500;max-width:260px'>" + esc(b.title) + "</td>" +
+        "<td style='color:#555'>" + esc(b.author) + "</td>" +
+        "<td><span class='tag " + tagCls(b.genre) + "'>" + esc(b.genre) + "</span></td>" +
+        "<td class='muted'>" + esc(b.shelf) + "</td>" +
+        "<td class='muted' style='white-space:nowrap'>" + fmt(b.dateAdded) + "</td>" +
+        "<td class='qty'>" + b.qty + "</td></tr>").join("");
+  } else {
+    let list = DATA.soldBooks.filter(b =>
+      !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q));
+    list.sort((a,b) => (b.soldDate||"").localeCompare(a.soldDate||""));
+    head.innerHTML = ["Title","Author","Genre","Shelf","Date Sold"].map(h => "<th>"+h+"</th>").join("");
+    count.textContent = list.length + " sold title" + (list.length !== 1 ? "s" : "");
+    rows.innerHTML = list.length === 0
+      ? '<tr><td colspan="5" class="empty">No books sold yet.</td></tr>'
+      : list.map(b =>
+        "<tr><td style='font-weight:500'>" + esc(b.title) + "</td>" +
+        "<td style='color:#555'>" + esc(b.author) + "</td>" +
+        "<td><span class='tag " + tagCls(b.genre) + "'>" + esc(b.genre) + "</span></td>" +
+        "<td class='muted'>" + esc(b.shelf) + "</td>" +
+        "<td class='muted'>" + fmt(b.soldDate) + "</td></tr>").join("");
+  }
+}
+setTab("inv");
+
+fetch("inventory-data.json?t=" + Date.now())
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(d => {
+    DATA = { books: d.books || [], soldBooks: d.soldBooks || [], savedAt: d.savedAt || "" };
+    updateStats();
+    render();
+  })
+  .catch(() => {
+    document.getElementById("rows").innerHTML =
+      '<tr><td colspan="6" class="empty">Couldn\'t load inventory data. Try refreshing the page.</td></tr>';
+  });
+</script>
+</body>
+</html>
