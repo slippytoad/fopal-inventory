@@ -22,7 +22,9 @@
   .card { background: white; border-radius: 12px; border: 1.5px solid #d9cdb8; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   thead tr { background: #3d1f1a; color: white; }
-  th { padding: 11px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.4px; }
+  th { padding: 11px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.4px; cursor: pointer; user-select: none; white-space: nowrap; }
+  th:hover { background: rgba(255,255,255,0.12); }
+  th .arrow { font-size: 10px; margin-left: 4px; opacity: 0.85; }
   td { padding: 9px 12px; }
   tbody tr { border-top: 1px solid #ede8df; }
   tbody tr:nth-child(even) { background: #fdfaf5; }
@@ -55,12 +57,6 @@
     <input type="text" id="search" placeholder="Search title or author..." oninput="render()">
     <select id="genre" onchange="render()"></select>
     <select id="shelf" onchange="render()"></select>
-    <select id="sort" onchange="render()">
-      <option value="title">Sort: Title</option>
-      <option value="author">Sort: Author</option>
-      <option value="genre">Sort: Genre</option>
-      <option value="date">Sort: Date Added</option>
-    </select>
   </div>
   <div class="count" id="count"></div>
   <div class="card"><table>
@@ -74,6 +70,47 @@ let DATA = { books: [], soldBooks: [], savedAt: "" };
 const GENRES = ["All", "Fiction", "Non-Fiction", "Children's"];
 const SHELVES = ["All", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
 let tab = "inv";
+const sortState = {
+  inv:  { key: "title", dir: 1 },
+  sold: { key: "soldDate", dir: -1 },
+};
+const COLS = {
+  inv: [
+    { label: "Title",     key: "title" },
+    { label: "Author",    key: "author" },
+    { label: "Genre",     key: "genre" },
+    { label: "Shelf",     key: "shelf" },
+    { label: "Added",     key: "dateAdded" },
+    { label: "Qty",       key: "qty" },
+  ],
+  sold: [
+    { label: "Title",     key: "title" },
+    { label: "Author",    key: "author" },
+    { label: "Genre",     key: "genre" },
+    { label: "Shelf",     key: "shelf" },
+    { label: "Date Sold", key: "soldDate" },
+  ],
+};
+function sortBy(key) {
+  const s = sortState[tab];
+  if (s.key === key) s.dir = -s.dir;
+  else { s.key = key; s.dir = key === "dateAdded" || key === "soldDate" || key === "qty" ? -1 : 1; }
+  render();
+}
+function cmp(a, b, key, dir) {
+  const va = a[key], vb = b[key];
+  const r = typeof va === "number" || typeof vb === "number"
+    ? (va || 0) - (vb || 0)
+    : String(va || "").localeCompare(String(vb || ""));
+  return r !== 0 ? r * dir : a.title.localeCompare(b.title);
+}
+function headHtml() {
+  const s = sortState[tab];
+  return COLS[tab].map(c =>
+    "<th onclick=\"sortBy('" + c.key + "')\">" + c.label +
+    (s.key === c.key ? "<span class='arrow'>" + (s.dir === 1 ? "&#9650;" : "&#9660;") + "</span>" : "") +
+    "</th>").join("");
+}
 
 function fmt(d) { if (!d) return "—"; const [y,m,day] = d.split("-"); return m+"/"+day+"/"+y; }
 function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
@@ -98,7 +135,6 @@ function setTab(t) {
   document.getElementById("tab-sold").className = t === "sold" ? "active" : "";
   document.getElementById("genre").style.display = t === "inv" ? "" : "none";
   document.getElementById("shelf").style.display = t === "inv" ? "" : "none";
-  document.getElementById("sort").style.display = t === "inv" ? "" : "none";
   render();
 }
 
@@ -111,19 +147,13 @@ function render() {
   if (tab === "inv") {
     const g = document.getElementById("genre").value;
     const s = document.getElementById("shelf").value;
-    const sort = document.getElementById("sort").value;
+    const sort = sortState.inv;
     let list = DATA.books.filter(b =>
       (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)) &&
       (g === "All" || b.genre === g) &&
       (s === "All" || b.shelf.indexOf(s) === 0));
-    list.sort((a,b) => {
-      if (sort === "title") return a.title.localeCompare(b.title);
-      if (sort === "author") return a.author.localeCompare(b.author);
-      if (sort === "genre") return a.genre.localeCompare(b.genre);
-      if (sort === "date") return (b.dateAdded||"").localeCompare(a.dateAdded||"");
-      return 0;
-    });
-    head.innerHTML = ["Title","Author","Genre","Shelf","Added","Qty"].map(h => "<th>"+h+"</th>").join("");
+    list.sort((a,b) => cmp(a, b, sort.key, sort.dir));
+    head.innerHTML = headHtml();
     count.textContent = list.length + " of " + DATA.books.length + " titles";
     rows.innerHTML = list.length === 0
       ? '<tr><td colspan="6" class="empty">No books found.</td></tr>'
@@ -137,8 +167,9 @@ function render() {
   } else {
     let list = DATA.soldBooks.filter(b =>
       !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q));
-    list.sort((a,b) => (b.soldDate||"").localeCompare(a.soldDate||""));
-    head.innerHTML = ["Title","Author","Genre","Shelf","Date Sold"].map(h => "<th>"+h+"</th>").join("");
+    const sort = sortState.sold;
+    list.sort((a,b) => cmp(a, b, sort.key, sort.dir));
+    head.innerHTML = headHtml();
     count.textContent = list.length + " sold title" + (list.length !== 1 ? "s" : "");
     rows.innerHTML = list.length === 0
       ? '<tr><td colspan="5" class="empty">No books sold yet.</td></tr>'
