@@ -67,8 +67,8 @@
 </div>
 <script>
 let DATA = { books: [], soldBooks: [], savedAt: "" };
-const GENRES = ["All", "Fiction", "Non-Fiction", "Children's"];
-const SHELVES = ["All", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
+const GENRES = ["All Genres", "Fiction", "Non-Fiction", "Children's"];
+const SHELVES = ["All Shelves", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
 let tab = "inv";
 const sortState = {
   inv:  { key: "title", dir: 1 },
@@ -150,8 +150,8 @@ function render() {
     const sort = sortState.inv;
     let list = DATA.books.filter(b =>
       (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)) &&
-      (g === "All" || b.genre === g) &&
-      (s === "All" || b.shelf.indexOf(s) === 0));
+      (g === "All Genres" || b.genre === g) &&
+      (s === "All Shelves" || b.shelf.indexOf(s) === 0));
     list.sort((a,b) => cmp(a, b, sort.key, sort.dir));
     head.innerHTML = headHtml();
     count.textContent = list.length + " of " + DATA.books.length + " titles";
