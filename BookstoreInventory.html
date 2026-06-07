@@ -94,6 +94,8 @@ function BookstoreInventory() {
   const fileHandleRef = useRef(null);
   const saveTimer     = useRef(null);
   const skipSave      = useRef(true);
+  const dirty         = useRef(false); // user edits made before the file (re)connected
+  const baseline      = useRef(false); // true once real inventory data is on screen
 
   const showToast = (msg, color = "#1a1a1a") => {
     setToast({ msg, color });
@@ -102,13 +104,22 @@ function BookstoreInventory() {
 
   // ---- Load / connect the JSON data file ----
   const loadFromHandle = async (handle) => {
+    fileHandleRef.current = handle;
+    if (dirty.current && baseline.current) {
+      // The user already made edits on top of real data - keep them and let
+      // the auto-save effect write them to the file, instead of clobbering them.
+      dirty.current = false;
+      setFileStatus("connected");
+      return;
+    }
     const file = await handle.getFile();
     const text = await file.text();
     const data = text.trim() ? JSON.parse(text) : {};
     skipSave.current = true;
+    dirty.current = false;
+    baseline.current = true;
     setBooks(dedupe(data.books || []));
     setSoldBooks(data.soldBooks || []);
-    fileHandleRef.current = handle;
     setFileStatus("connected");
   };
 
@@ -137,6 +148,7 @@ function BookstoreInventory() {
       .then(data => {
         if (fileHandleRef.current) return; // local data file already connected
         skipSave.current = true;
+        baseline.current = true;
         setBooks(prev => prev.length ? prev : dedupe(data.books || []));
         setSoldBooks(prev => prev.length ? prev : (data.soldBooks || []));
       })
@@ -183,8 +195,8 @@ function BookstoreInventory() {
 
   // ---- Auto-save (debounced) whenever inventory or sold list changes ----
   useEffect(() => {
-    if (fileStatus !== "connected") return;
     if (skipSave.current) { skipSave.current = false; return; }
+    if (fileStatus !== "connected") { dirty.current = true; return; }
     clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(async () => {
       try {
