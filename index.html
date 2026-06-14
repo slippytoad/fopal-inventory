@@ -125,7 +125,7 @@ function headHtml() {
 }
 
 function fmt(d) { if (!d) return "—"; const [y,m,day] = d.split("-"); return m+"/"+day+"/"+y; }
-function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 function tagCls(g) { return g === "Fiction" ? "fic" : g === "Non-Fiction" ? "non" : "chi"; }
 
 function fill(id, opts) {
@@ -184,7 +184,7 @@ function render() {
       ? '<tr><td colspan="6" class="empty">' + (unclearOnly ? "No unclear titles." : "No books found.") + '</td></tr>'
       : list.map(b =>
         "<tr><td style='font-weight:500;max-width:260px'>" + esc(b.title) +
-          (b.dateAdded === LATEST_ADDED && LATEST_ADDED ? " <span class='newtag' title='Added " + fmt(b.dateAdded) + "'>NEW</span>" : "") + "</td>" +
+          (b.dateAdded === LATEST_ADDED && LATEST_ADDED ? " <span class='newtag' title='Added " + esc(fmt(b.dateAdded)) + "'>NEW</span>" : "") + "</td>" +
         "<td style='color:#555'>" + esc(b.author) + "</td>" +
         "<td><span class='tag " + tagCls(b.genre) + "'>" + esc(b.genre) + "</span></td>" +
         "<td class='muted'>" + esc(b.shelf) + "</td>" +
