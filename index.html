@@ -35,6 +35,7 @@
   .muted { color: #666; font-size: 12px; }
   .empty { padding: 40px; text-align: center; color: #999; font-style: italic; }
   .qty { font-weight: 700; text-align: center; }
+  .newtag { margin-left: 7px; background: #27ae60; color: white; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; letter-spacing: 0.5px; vertical-align: middle; }
   .footer { margin-top: 28px; font-size: 12px; color: #999; text-align: center; }
   label.chk { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; white-space: nowrap; }
 </style>
@@ -68,6 +69,7 @@
 </div>
 <script>
 let DATA = { books: [], soldBooks: [], savedAt: "" };
+let LATEST_ADDED = "";
 const GENRES = ["All Genres", "Fiction", "Non-Fiction", "Children's"];
 const SHELVES = ["All Shelves", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
 let tab = "inv";
@@ -143,6 +145,7 @@ function updateStats() {
   document.getElementById("stat-sold").textContent = DATA.soldBooks.length;
   const unclear = DATA.books.filter(b => b.unclear).length;
   document.getElementById("tab-unclear-badge").textContent = unclear ? " (" + unclear + ")" : "";
+  LATEST_ADDED = DATA.books.reduce((m, b) => b.dateAdded > m ? b.dateAdded : m, "");
   document.getElementById("stat-date").textContent = fmt((DATA.savedAt || "").slice(0,10));
 }
 
@@ -180,7 +183,8 @@ function render() {
     rows.innerHTML = list.length === 0
       ? '<tr><td colspan="6" class="empty">' + (unclearOnly ? "No unclear titles." : "No books found.") + '</td></tr>'
       : list.map(b =>
-        "<tr><td style='font-weight:500;max-width:260px'>" + esc(b.title) + "</td>" +
+        "<tr><td style='font-weight:500;max-width:260px'>" + esc(b.title) +
+          (b.dateAdded === LATEST_ADDED && LATEST_ADDED ? " <span class='newtag' title='Added " + fmt(b.dateAdded) + "'>NEW</span>" : "") + "</td>" +
         "<td style='color:#555'>" + esc(b.author) + "</td>" +
         "<td><span class='tag " + tagCls(b.genre) + "'>" + esc(b.genre) + "</span></td>" +
         "<td class='muted'>" + esc(b.shelf) + "</td>" +
