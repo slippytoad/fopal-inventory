@@ -1,16 +1,6 @@
 {
   "books": [
     {
-      "id": 1,
-      "title": "This Shattered World",
-      "author": "Amie Kaufman & Meagan Spooner",
-      "genre": "Fiction",
-      "shelf": "Display",
-      "qty": 1,
-      "unclear": false,
-      "dateAdded": "2026-06-06"
-    },
-    {
       "id": 3,
       "title": "The Verdict",
       "author": "Nick Stone",
@@ -124,16 +114,6 @@
       "id": 14,
       "title": "The Somnambulist",
       "author": "Jonathan Barnes",
-      "genre": "Fiction",
-      "shelf": "Shelf 1",
-      "qty": 1,
-      "unclear": false,
-      "dateAdded": "2026-06-06"
-    },
-    {
-      "id": 15,
-      "title": "Jane Eyre",
-      "author": "Charlotte Bronte",
       "genre": "Fiction",
       "shelf": "Shelf 1",
       "qty": 1,
@@ -795,16 +775,6 @@
       "title": "An Anthropologist on Mars",
       "author": "Oliver Sacks",
       "genre": "Non-Fiction",
-      "shelf": "Display",
-      "qty": 1,
-      "unclear": false,
-      "dateAdded": "2026-06-06"
-    },
-    {
-      "id": 82,
-      "title": "Math for Smarty Pants",
-      "author": "Marilyn Burns",
-      "genre": "Children's",
       "shelf": "Display",
       "qty": 1,
       "unclear": false,
@@ -1589,6 +1559,126 @@
       "qty": 1,
       "unclear": false,
       "dateAdded": "2026-06-06"
+    },
+    {
+      "id": 165,
+      "title": "The Night Manager",
+      "author": "John le Carre",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 166,
+      "title": "Of Mice and Men",
+      "author": "John Steinbeck",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 167,
+      "title": "Death Comes to Pemberley",
+      "author": "P.D. James",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 168,
+      "title": "Biting the Moon",
+      "author": "Martha Grimes",
+      "genre": "Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 169,
+      "title": "The Curious Incident of the Dog in the Night-Time",
+      "author": "Mark Haddon",
+      "genre": "Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 170,
+      "title": "Better",
+      "author": "Atul Gawande",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 171,
+      "title": "You with the Sad Eyes",
+      "author": "Christina Applegate",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 172,
+      "title": "Levels of the Game",
+      "author": "John McPhee",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 173,
+      "title": "Ali: A Life",
+      "author": "Jonathan Eig",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 174,
+      "title": "Titanic: The Story of the Unsinkable",
+      "author": "Michael Wilkinson & Robert Hamilton",
+      "genre": "Non-Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 175,
+      "title": "The Sisters: The Saga of the Mitford Family",
+      "author": "Mary S. Lovell",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
+    },
+    {
+      "id": 176,
+      "title": "The Retreat of Western Liberalism",
+      "author": "Edward Luce",
+      "genre": "Non-Fiction",
+      "shelf": "Shelf 4",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-13"
     }
   ],
   "soldBooks": [
@@ -1627,6 +1717,42 @@
       "dateAdded": "2026-06-06",
       "soldDate": "2026-06-13",
       "soldId": 1781413206431
+    },
+    {
+      "id": 1,
+      "title": "This Shattered World",
+      "author": "Amie Kaufman & Meagan Spooner",
+      "genre": "Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06",
+      "soldDate": "2026-06-13",
+      "soldId": 1781414566620
+    },
+    {
+      "id": 15,
+      "title": "Jane Eyre",
+      "author": "Charlotte Bronte",
+      "genre": "Fiction",
+      "shelf": "Shelf 1",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06",
+      "soldDate": "2026-06-13",
+      "soldId": 1781414566633
+    },
+    {
+      "id": 82,
+      "title": "Math for Smarty Pants",
+      "author": "Marilyn Burns",
+      "genre": "Children's",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06",
+      "soldDate": "2026-06-13",
+      "soldId": 1781414566700
     }
   ],
   "savedAt": "2026-06-13T00:00:00.000Z"
