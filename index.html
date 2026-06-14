@@ -43,7 +43,7 @@
 <div class="header"><div class="header-inner">
   <h1>Friends of Palo Alto Library</h1><span class="subtitle">Book Inventory</span>
   <div class="stats">
-    <span>&#128218; <strong id="stat-stock"></strong> in stock</span>
+    <span>&#128218; <strong id="stat-books"></strong> <span id="stat-books-label">books</span> &middot; <strong id="stat-stock"></strong> <span id="stat-titles-label">titles</span></span>
     <span>&#128717;&#65039; <strong id="stat-sold"></strong> sold</span>
     <span style="margin-left:auto; font-size:13px; background:rgba(255,255,255,0.15); padding:4px 12px; border-radius:14px;">&#128064; View only &middot; updated <span id="stat-date"></span></span>
   </div>
@@ -124,7 +124,12 @@ fill("genre", GENRES);
 fill("shelf", SHELVES);
 
 function updateStats() {
-  document.getElementById("stat-stock").textContent = DATA.books.length;
+  const titles = DATA.books.length;
+  const copies = DATA.books.reduce((sum, b) => sum + (b.qty || 0), 0);
+  document.getElementById("stat-books").textContent = copies;
+  document.getElementById("stat-books-label").textContent = copies === 1 ? "book" : "books";
+  document.getElementById("stat-stock").textContent = titles;
+  document.getElementById("stat-titles-label").textContent = titles === 1 ? "title" : "titles";
   document.getElementById("stat-sold").textContent = DATA.soldBooks.length;
   document.getElementById("stat-date").textContent = fmt((DATA.savedAt || "").slice(0,10));
 }
