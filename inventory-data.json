@@ -11,16 +11,6 @@
       "dateAdded": "2026-06-06"
     },
     {
-      "id": 2,
-      "title": "Mostly Harmless",
-      "author": "Douglas Adams",
-      "genre": "Fiction",
-      "shelf": "Display",
-      "qty": 1,
-      "unclear": false,
-      "dateAdded": "2026-06-06"
-    },
-    {
       "id": 3,
       "title": "The Verdict",
       "author": "Nick Stone",
@@ -1599,6 +1589,20 @@
       "qty": 1,
       "unclear": false,
       "dateAdded": "2026-06-06"
+    }
+  ],
+  "soldBooks": [
+    {
+      "id": 2,
+      "title": "Mostly Harmless",
+      "author": "Douglas Adams",
+      "genre": "Fiction",
+      "shelf": "Display",
+      "qty": 1,
+      "unclear": false,
+      "dateAdded": "2026-06-06",
+      "soldDate": "2026-06-13",
+      "soldId": 1781413206271
     },
     {
       "id": 163,
@@ -1608,7 +1612,9 @@
       "shelf": "Display",
       "qty": 1,
       "unclear": false,
-      "dateAdded": "2026-06-06"
+      "dateAdded": "2026-06-06",
+      "soldDate": "2026-06-13",
+      "soldId": 1781413206430
     },
     {
       "id": 164,
@@ -1618,9 +1624,10 @@
       "shelf": "Display",
       "qty": 1,
       "unclear": false,
-      "dateAdded": "2026-06-06"
+      "dateAdded": "2026-06-06",
+      "soldDate": "2026-06-13",
+      "soldId": 1781413206431
     }
   ],
-  "soldBooks": [],
-  "savedAt": "2026-06-07T00:06:48.225Z"
+  "savedAt": "2026-06-13T00:00:00.000Z"
 }
