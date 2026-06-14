@@ -51,6 +51,7 @@
 <div class="main">
   <div class="tabs">
     <button id="tab-inv" class="active" onclick="setTab('inv')">&#128218; Inventory</button>
+    <button id="tab-unclear" onclick="setTab('unclear')">&#128681; Unclear<span id="tab-unclear-badge"></span></button>
     <button id="tab-sold" onclick="setTab('sold')">&#128717;&#65039; Sold</button>
   </div>
   <div class="controls">
@@ -71,11 +72,20 @@ const GENRES = ["All Genres", "Fiction", "Non-Fiction", "Children's"];
 const SHELVES = ["All Shelves", "Display", "Shelf 1", "Shelf 2", "Shelf 3", "Shelf 4", "Shelf 5", "Shelf 6"];
 let tab = "inv";
 const sortState = {
-  inv:  { key: "title", dir: 1 },
-  sold: { key: "soldDate", dir: -1 },
+  inv:     { key: "title", dir: 1 },
+  unclear: { key: "title", dir: 1 },
+  sold:    { key: "soldDate", dir: -1 },
 };
 const COLS = {
   inv: [
+    { label: "Title",     key: "title" },
+    { label: "Author",    key: "author" },
+    { label: "Genre",     key: "genre" },
+    { label: "Shelf",     key: "shelf" },
+    { label: "Added",     key: "dateAdded" },
+    { label: "Qty",       key: "qty" },
+  ],
+  unclear: [
     { label: "Title",     key: "title" },
     { label: "Author",    key: "author" },
     { label: "Genre",     key: "genre" },
@@ -131,12 +141,15 @@ function updateStats() {
   document.getElementById("stat-stock").textContent = titles;
   document.getElementById("stat-titles-label").textContent = titles === 1 ? "title" : "titles";
   document.getElementById("stat-sold").textContent = DATA.soldBooks.length;
+  const unclear = DATA.books.filter(b => b.unclear).length;
+  document.getElementById("tab-unclear-badge").textContent = unclear ? " (" + unclear + ")" : "";
   document.getElementById("stat-date").textContent = fmt((DATA.savedAt || "").slice(0,10));
 }
 
 function setTab(t) {
   tab = t;
   document.getElementById("tab-inv").className = t === "inv" ? "active" : "";
+  document.getElementById("tab-unclear").className = t === "unclear" ? "active" : "";
   document.getElementById("tab-sold").className = t === "sold" ? "active" : "";
   document.getElementById("genre").style.display = t === "inv" ? "" : "none";
   document.getElementById("shelf").style.display = t === "inv" ? "" : "none";
@@ -149,19 +162,23 @@ function render() {
   const rows = document.getElementById("rows");
   const count = document.getElementById("count");
 
-  if (tab === "inv") {
+  if (tab === "inv" || tab === "unclear") {
+    const unclearOnly = tab === "unclear";
     const g = document.getElementById("genre").value;
     const s = document.getElementById("shelf").value;
-    const sort = sortState.inv;
+    const sort = sortState[tab];
     let list = DATA.books.filter(b =>
       (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)) &&
-      (g === "All Genres" || b.genre === g) &&
-      (s === "All Shelves" || b.shelf.indexOf(s) === 0));
+      (!unclearOnly || b.unclear) &&
+      (unclearOnly || g === "All Genres" || b.genre === g) &&
+      (unclearOnly || s === "All Shelves" || b.shelf.indexOf(s) === 0));
     list.sort((a,b) => cmp(a, b, sort.key, sort.dir));
     head.innerHTML = headHtml();
-    count.textContent = list.length + " of " + DATA.books.length + " titles";
+    count.textContent = unclearOnly
+      ? list.length + " unclear title" + (list.length !== 1 ? "s" : "")
+      : list.length + " of " + DATA.books.length + " titles";
     rows.innerHTML = list.length === 0
-      ? '<tr><td colspan="6" class="empty">No books found.</td></tr>'
+      ? '<tr><td colspan="6" class="empty">' + (unclearOnly ? "No unclear titles." : "No books found.") + '</td></tr>'
       : list.map(b =>
         "<tr><td style='font-weight:500;max-width:260px'>" + esc(b.title) + "</td>" +
         "<td style='color:#555'>" + esc(b.author) + "</td>" +
